@@ -9,7 +9,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
     <style>
-        /* --- RESET & GLOBAL STYLES --- */
         * {
             margin: 0;
             padding: 0;
@@ -87,7 +86,6 @@
             object-fit: cover;
             border: 4px solid #4facfe;
             margin-bottom: 20px;
-            /* Ganti URL gambar di bawah dengan foto Anda */
             background-image: url('https://via.placeholder.com/150'); 
             background-size: cover;
             background-position: center;
@@ -169,6 +167,14 @@
             border: 1px solid #333;
         }
 
+        .project-card img {
+            width: 100%;
+            height: 200px; /* Tinggi tetap agar semua kartu sejajar */
+            object-fit: cover; /* Memastikan gambar tidak gepeng (crop otomatis) */
+            border-radius: 8px; /* Sudut gambar melengkung sedikit */
+            margin-bottom: 15px; /* Jarak antara gambar dan judul */
+        }
+        
         .project-card:hover {
             transform: translateY(-10px);
             border-color: #4facfe;
@@ -270,48 +276,56 @@
         </div>
     </section>
 
-    <section id="projects">
+<section id="projects">
         <h2 class="section-title">Projects</h2>
         <div class="projects-grid">
+            
             <div class="project-card">
+                <img src="img/3.jpg" alt="Lil Wild Season 3">
                 <h3>Lil Wild Season 3</h3>
-                <p>Deskripsi singkat tentang proyek yang pernah Anda buat. Apa teknologinya? Apa fungsinya?</p>
+                <p>Deskripsi singkat tentang proyek yang pernah Anda buat.</p>
                 <a href="#" class="project-link">Lihat Detail &rarr;</a>
             </div>
             
             <div class="project-card">
+                <img src="https://via.placeholder.com/400x250" alt="Cleo and Cuquin">
                 <h3>Cleo and Cuquin</h3>
-                <p>Deskripsi singkat tentang proyek kedua. Tunjukkan kemampuan terbaik Anda di sini.</p>
+                <p>Deskripsi singkat tentang proyek kedua.</p>
                 <a href="#" class="project-link">Lihat Detail &rarr;</a>
             </div>
 
             <div class="project-card">
+                <img src="https://via.placeholder.com/400x250" alt="AlienCG Trailer">
                 <h3>AlienCG Trailer</h3>
                 <p>Deskripsi singkat tentang proyek ketiga.</p>
                 <a href="#" class="project-link">Lihat Detail &rarr;</a>
             </div>
 
             <div class="project-card">
-                <h3>KMIPN VI Animation Competition 2024 (2nd place)</h3>
-                <p>Deskripsi singkat tentang proyek kedua. Tunjukkan kemampuan terbaik Anda di sini.</p>
+                <img src="https://via.placeholder.com/400x250" alt="KMIPN VI">
+                <h3>KMIPN VI Animation Competition 2024</h3>
+                <p>Juara 2 dalam kompetisi animasi.</p>
                 <a href="#" class="project-link">Lihat Detail &rarr;</a>
             </div>
 
             <div class="project-card">
-                <h3>3D Mascot making for MMB Fest exhibition event (@mmbfest)</h3>
-                <p>Deskripsi singkat tentang proyek kedua. Tunjukkan kemampuan terbaik Anda di sini.</p>
+                <img src="img/6.jpg" alt="MMB Fest Mascot">
+                <h3>Mascot for MMB Fest (@mmbfest)</h3>
+                <p>Pembuatan Maskot 3D untuk acara pameran.</p>
                 <a href="#" class="project-link">Lihat Detail &rarr;</a>
             </div>
 
             <div class="project-card">
-                <h3>3D Bumper making for Theatricals Music Performance (@wonderlands.wonder)</h3>
-                <p>Deskripsi singkat tentang proyek kedua. Tunjukkan kemampuan terbaik Anda di sini.</p>
+                <img src="https://via.placeholder.com/400x250" alt="Theatricals Bumper">
+                <h3>Bumper for Theatricals Music</h3>
+                <p>Pembuatan Bumper 3D untuk pertunjukan musik.</p>
                 <a href="#" class="project-link">Lihat Detail &rarr;</a>
             </div>
 
             <div class="project-card">
+                <img src="https://via.placeholder.com/400x250" alt="Pokémon GO Bumper">
                 <h3>Pokémon GO PGTraveler (Bumper)</h3>
-                <p>Deskripsi singkat tentang proyek kedua. Tunjukkan kemampuan terbaik Anda di sini.</p>
+                <p>Proyek pembuatan bumper animasi.</p>
                 <a href="#" class="project-link">Lihat Detail &rarr;</a>
             </div>
         </div>
