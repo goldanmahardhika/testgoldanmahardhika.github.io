@@ -164,65 +164,86 @@
         }
 
         /* --- PROJECTS GRID --- */
-        .grid-container {
+        .projects-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 25px;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Responsif grid */
+            gap: 30px;
         }
 
         .project-card {
-            background: var(--card-bg);
-            border-radius: 12px;
+            background: #fff; /* Warna kartu (Putih agar mirip gambar referensi) */
+            border-radius: 10px;
             overflow: hidden;
+            display: flex;
+            flex-direction: column; /* Menyusun ke bawah */
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
             transition: 0.3s;
-            position: relative;
-            border: 1px solid #333;
+            height: 100%; /* Agar tinggi kartu seragam */
         }
 
         .project-card:hover {
             transform: translateY(-5px);
-            border-color: var(--accent);
             box-shadow: 0 10px 20px rgba(0,0,0,0.5);
         }
 
-        .card-img-wrapper {
-            position: relative;
-            height: 200px;
+        /* Bagian Gambar */
+        .card-img {
+            width: 100%;
+            height: 200px; /* Tinggi gambar tetap */
             overflow: hidden;
         }
 
-        .card-img-wrapper img {
+        .card-img img {
             width: 100%;
             height: 100%;
-            object-fit: cover;
+            object-fit: cover; /* Agar gambar tidak gepeng */
             transition: 0.5s;
         }
 
-        .project-card:hover .card-img-wrapper img {
-            transform: scale(1.05);
+        .project-card:hover .card-img img {
+            transform: scale(1.1); /* Efek zoom saat hover */
         }
 
-        .card-body {
-            padding: 20px;
+        /* Bagian Teks (Judul) */
+        .card-content {
+            padding: 15px 20px;
+            flex-grow: 1; /* Mendorong tombol ke paling bawah */
+            background-color: #fff; /* Background putih untuk teks */
+            text-align: left; /* Teks rata kiri seperti gambar */
+            border-bottom: 1px solid #eee;
         }
 
-        .card-body h3 {
+        .card-content h3 {
             font-size: 1.1rem;
-            margin-bottom: 10px;
-            color: #fff;
-        }
-
-        .card-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-            font-size: 0.85rem;
-            color: var(--accent);
+            color: #333; /* Warna teks hitam/gelap */
             font-weight: 600;
-            margin-top: 10px;
+            margin: 0;
         }
         
-        .card-link:hover { gap: 10px; }
+        .card-content p {
+            font-size: 0.85rem;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        /* Bagian Tombol Kuning di Bawah */
+        .card-btn {
+            background-color: #FFC107; /* Warna KUNING seperti di gambar */
+            color: #000;
+            width: 100%;
+            padding: 12px;
+            text-align: center;
+            font-size: 1.2rem;
+            transition: 0.3s;
+            border: none;
+            cursor: pointer;
+            display: block; /* Agar full width */
+        }
+
+        .card-btn:hover {
+            background-color: #ffdb4d; /* Warna kuning lebih terang saat hover */
+            padding-left: 10px; /* Efek gerak sedikit */
+        }
 
         /* --- SOCIAL / FOOTER --- */
         footer {
