@@ -3,13 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Portofolio Goldan Mahardhika">
-    <title>Goldan Mahardhika | Portfolio</title>
+    <meta name="description" content="Portofolio Goldan Mahardhika - 3D Artist">
+    <title>Goldan Mahardhika Portfolio</title>
+    
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='35' fill='%23808080'/></svg>">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='35' fill='%234facfe'/></svg>">
     
     <style>
+        :root {
+            --primary: #4facfe;
+            --secondary: #00f2fe;
+            --bg-dark: #050505;
+            --glass-bg: rgba(255, 255, 255, 0.1);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-color: #e0e0e0;
+        }
+
+        html { scroll-padding-top: 100px; }
+
         * {
             margin: 0;
             padding: 0;
@@ -19,237 +32,190 @@
 
         body {
             font-family: 'Poppins', sans-serif;
-            background-color: #121212;
-            color: #e0e0e0;
+            background-color: var(--bg-dark);
+            color: var(--text-color);
             line-height: 1.6;
-        }
-
-        a {
-            text-decoration: none;
-            color: inherit;
-            transition: 0.3s;
-        }
-
-        ul {
-            list-style: none;
-        }
-
-        /* --- HEADER / NAVIGATION --- */
-        header {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            background: rgba(18, 18, 18, 0.95);
-            padding: 20px 5%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            z-index: 1000;
-            border-bottom: 1px solid #333;
-        }
-
-        .logo {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: #4facfe; /* Warna aksen biru */
-        }
-
-        nav ul {
-            display: flex;
-            gap: 30px;
-        }
-
-        nav a:hover {
-            color: #4facfe;
-        }
-
-        /* Menu hamburger untuk mobile disembunyikan di desktop */
-        .menu-toggle {
-            display: none;
-        }
-
-        /* --- HERO SECTION --- */
-        .hero {
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding: 0 20px;
-            background: radial-gradient(circle at center, #1e1e1e 0%, #121212 100%);
-        }
-
-        .profile-img {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 4px solid #4facfe;
-            margin-bottom: 20px;
-        }
-
-        .hero h1 {
-            font-size: 3rem;
-            margin-bottom: 10px;
-        }
-
-        .hero h1 span {
-            color: #4facfe;
-        }
-
-        .hero p {
-            font-size: 1.2rem;
-            color: #aaa;
-            max-width: 600px;
-            margin-bottom: 30px;
-        }
-
-        .btn {
-            display: inline-block;
-            padding: 12px 30px;
-            background: #4facfe;
-            color: #fff;
-            border-radius: 30px;
-            font-weight: 600;
-            box-shadow: 0 4px 15px rgba(79, 172, 254, 0.4);
-        }
-
-        .btn:hover {
-            transform: translateY(-3px);
-            background: #00f2fe;
-        }
-
-        /* --- SECTIONS GENERAL --- */
-        section {
-            padding: 80px 10%;
-        }
-
-        .section-title {
-            text-align: center;
-            font-size: 2rem;
-            margin-bottom: 50px;
+            overflow-x: hidden;
             position: relative;
         }
 
-        .section-title::after {
-            content: '';
-            display: block;
-            width: 60px;
-            height: 4px;
-            background: #4facfe;
-            margin: 10px auto 0;
-            border-radius: 2px;
-        }
-
-        /* --- ABOUT --- */
-        .about-content {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 20px;
-            text-align: center;
-
-            font-size: 1.2rem; /* Ukuran font */
-            line-height: 1.8; /* Jarak antar baris */
-            
-        }
-
-        /* --- PROJECTS / PORTFOLIO --- */
-        .projects-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-        }
-
-        .project-card {
-            background: #1e1e1e;
-            padding: 20px;
-            border-radius: 10px;
-            transition: 0.3s;
-            border: 1px solid #333;
-        }
-
-        .project-card img {
+        /* --- CANVAS PARTIKEL --- */
+        #particle-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
             width: 100%;
-            height: 200px; /* Tinggi tetap agar semua kartu sejajar */
-            object-fit: cover; /* Memastikan gambar tidak gepeng (crop otomatis) */
-            border-radius: 8px; /* Sudut gambar melengkung sedikit */
-            margin-bottom: 15px; /* Jarak antara gambar dan judul */
+            height: 100%;
+            z-index: -10; /* Di belakang konten */
+            background: #020202; /* Background dasar hitam */
         }
-        
+
+        a { text-decoration: none; color: inherit; transition: 0.3s; }
+        ul { list-style: none; }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+
+        /* --- HEADER --- */
+        header {
+            position: fixed; top: 0; width: 100%;
+            background: rgba(5, 5, 5, 0.6);
+            backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
+            padding: 20px 5%; display: flex; justify-content: space-between; align-items: center;
+            z-index: 1000; border-bottom: 1px solid var(--glass-border);
+        }
+
+        .logo {
+            font-size: 1.8rem; font-weight: 700;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+
+        nav ul { display: flex; gap: 30px; }
+        nav a { font-weight: 500; position: relative; }
+        nav a::after {
+            content: ''; position: absolute; width: 0; height: 2px; bottom: -5px; left: 0;
+            background: var(--primary); transition: width 0.3s;
+        }
+        nav a:hover::after { width: 100%; }
+        nav a:hover { color: var(--primary); text-shadow: 0 0 10px rgba(79, 172, 254, 0.5); }
+
+        /* --- HERO SECTION --- */
+        .hero {
+            min-height: 100vh; display: flex; flex-direction: column;
+            justify-content: center; align-items: center; text-align: center;
+            padding: 100px 20px 0; position: relative;
+        }
+
+        .profile-wrapper {
+            position: relative; margin-bottom: 30px;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .profile-img {
+            width: 200px; height: 200px; border-radius: 50%; object-fit: cover;
+            border: 2px solid rgba(255, 255, 255, 0.2); 
+            box-shadow: 0 0 60px rgba(79, 172, 254, 0.5); /* Glow biru */
+        }
+
+        .hero h1 {
+            font-size: 3.5rem; margin-bottom: 10px; font-weight: 700; letter-spacing: -1px;
+        }
+
+        .hero h1 span {
+            background: linear-gradient(to right, var(--primary), #fff, var(--secondary));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            background-size: 200% auto; animation: textShine 5s ease-in-out infinite alternate;
+        }
+
+        @keyframes textShine {
+            0% { background-position: 0% 50%; } 100% { background-position: 100% 50%; }
+        }
+
+        /* --- TYPEWRITER CSS --- */
+        .typing-container {
+            font-size: 1.5rem; color: #aaa; margin-bottom: 40px;
+            min-height: 1.6em; display: flex; justify-content: center; align-items: center;
+        }
+        #typing-text {
+            color: #ffffff; font-weight: 600; margin-right: 5px; margin-left: 8px;
+        }
+        .cursor {
+            display: inline-block; width: 3px; height: 28px; background-color: var(--secondary);
+            animation: blink 1s infinite;
+        }
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+
+        .btn {
+            display: inline-block; padding: 14px 35px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            color: #000; border-radius: 50px; font-weight: 600;
+            box-shadow: 0 0 20px rgba(79, 172, 254, 0.4);
+            transition: all 0.3s ease; position: relative; overflow: hidden; z-index: 1;
+        }
+        .btn:hover { transform: translateY(-5px); box-shadow: 0 0 40px rgba(0, 242, 254, 0.7); }
+
+        /* --- SECTIONS --- */
+        section { padding: 100px 10%; }
+        .section-title {
+            text-align: center; font-size: 2.5rem; margin-bottom: 60px; position: relative;
+        }
+        .section-title::after {
+            content: ''; display: block; width: 80px; height: 4px;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            margin: 15px auto 0; border-radius: 2px;
+        }
+
+        /* --- CARDS & GRID --- */
+        .projects-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px;
+        }
+        .about-content, .project-card {
+            background: var(--glass-bg); border: 1px solid var(--glass-border);
+            border-radius: 20px; 
+            backdrop-filter: blur(15px); /* Blur lebih kuat */
+            -webkit-backdrop-filter: blur(15px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        .about-content { padding: 40px; text-align: center; font-size: 1.2rem; max-width: 900px; margin: 0 auto; }
+        .project-card { padding: 20px; transition: 0.4s; overflow: hidden; }
+        .project-card img {
+            width: 100%; height: 220px; object-fit: cover; border-radius: 12px;
+            margin-bottom: 20px; transition: 0.3s;
+        }
         .project-card:hover {
-            transform: translateY(-10px);
-            border-color: #4facfe;
+            transform: translateY(-15px); 
+            background: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 15px 40px rgba(79, 172, 254, 0.15); 
+            border-color: rgba(79, 172, 254, 0.4);
         }
-
-        .project-card h3 {
-            margin-bottom: 10px;
-            color: #fff;
-        }
-
-        .project-card p {
-            font-size: 0.9rem;
-            color: #bbb;
-            margin-bottom: 15px;
-        }
-
+        .project-card:hover img { transform: scale(1.03); }
+        .project-card h3 { margin-bottom: 10px; color: #fff; font-size: 1.4rem; }
+        .project-card p { font-size: 0.95rem; color: #bbb; margin-bottom: 20px; min-height: 60px; }
         .project-link {
-            color: #4facfe;
-            font-size: 0.9rem;
-            font-weight: 600;
+            display: inline-flex; align-items: center; gap: 8px; color: var(--secondary);
+            font-weight: 600; font-size: 0.95rem; transition: 0.3s;
         }
+        .project-link:hover { color: #fff; gap: 15px; }
 
         /* --- CONTACT --- */
-        .contact {
-            text-align: center;
-            background: #1a1a1a;
-        }
+        .contact { text-align: center; position: relative; }
 
-        .social-links {
-            margin-top: 30px;
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-        }
-
+        .social-links { margin-top: 40px; display: flex; justify-content: center; gap: 25px; }
         .social-links a {
-            font-size: 1.5rem;
-            width: 50px;
-            height: 50px;
-            background: #333;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-            color: #fff;
+            font-size: 1.5rem; width: 60px; height: 60px; background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--glass-border); display: flex; align-items: center; justify-content: center;
+            border-radius: 50%; color: #fff; transition: 0.4s;
         }
-
         .social-links a:hover {
-            background: #4facfe;
-            color: #fff;
+            background: var(--primary); color: #000; transform: rotate(360deg) scale(1.1);
+            box-shadow: 0 0 20px var(--primary);
         }
 
-        /* --- FOOTER --- */
         footer {
-            text-align: center;
-            padding: 20px;
-            background: #000;
-            font-size: 0.8rem;
-            color: #777;
+            text-align: center; padding: 40px; background: #020202;
+            font-size: 0.9rem; color: #666; border-top: 1px solid #1a1a1a;
         }
 
-        /* --- RESPONSIVE MEDIA QUERIES --- */
         @media (max-width: 768px) {
-            .hero h1 { font-size: 2rem; }
-            nav { display: none; } /* Sederhanakan menu untuk mobile demo ini */
-            section { padding: 60px 5%; }
+            .hero h1 { font-size: 2.5rem; }
+            .typing-container { font-size: 1.2rem; }
+            nav { display: none; } 
+            section { padding: 80px 5%; }
+            .profile-img { width: 140px; height: 140px; }
         }
     </style>
 </head>
 <body>
 
+    <canvas id="particle-canvas"></canvas>
+
     <header>
-        <a href="#home" class="logo">GM.</a> <nav>
+        <a href="#home" class="logo">GM.</a> 
+        <nav>
             <ul>
                 <li><a href="#home">Home</a></li>
                 <li><a href="#about">About</a></li>
@@ -260,129 +226,277 @@
     </header>
 
     <section id="home" class="hero">
-        <img src="img/2.JPG" alt="Goldan Mahardhika" width="200" class="profile-img">
+        <div class="profile-wrapper">
+            <img src="img/2.JPG" alt="Goldan Mahardhika" class="profile-img">
+        </div>
         
-        <h1>Goldan Mahardhika</h1>
-        <p>3D Artist - Also interested in Crypto & Web 3</p>
-        <a href="#projects" class="btn">Explore My Portfolio</a>
+        <div data-aos="fade-up">
+            <h1><span>Goldan Mahardhika</span></h1>
+            
+            <div class="typing-container">
+                <span id="typing-text"></span><span class="cursor"></span>
+            </div>
+
+            <a href="#projects" class="btn">Explore My Portfolio</a>
+        </div>
     </section>
 
     <section id="about">
-        <h2 class="section-title">About Me</h2>
-        <div class="about-content">
+        <h2 class="section-title" data-aos="fade-up">About Me</h2>
+        <div class="about-content" data-aos="fade-up" data-aos-delay="200">
             <p>
-                I'm Goldan Mahardhika who passionate in 3D Modeling and Lighting I got several experiences as Render Artist at Mocca Studio 
-                and 4 Crows Digital, these are Animation Studios based in Malang. I do teamworking on 3D Lighting set, Rendering and Compositing with Blender and Nuke Software. 
-                One of the biggest project i ever work is “Lil Wild Season 3” an Children’s television Animation series.
+                I'm Goldan Mahardhika, a passionate <strong>3D Artist</strong> specializing in Modeling and Lighting. 
+                <br> I got several experiences as Render Artist at Mocca Studio 
+                and 4 Crows Digital. I do teamworking on 3D Lighting set, Rendering and Compositing with Blender and Nuke Software.
+                <br> <br>
+                One of the biggest project i ever work is <em>“Lil Wild Season 3”</em> an Children’s television Animation series.
+                I'm currently exploring the intersection of 3D art and the Web3 ecosystem.
             </p>
         </div>
     </section>
 
-<section id="projects">
-        <h2 class="section-title">Projects</h2>
+    <section id="projects">
+        <h2 class="section-title" data-aos="fade-up">Projects</h2>
         <div class="projects-grid">
             
-            <div class="project-card">
+            <div class="project-card" data-aos="fade-up" data-aos-delay="100">
                 <img src="img/3.jpg" alt="Lil Wild Season 3">
                 <h3>Lil Wild Season 3</h3>
-                <p>Children television Animation series.</p>
-                <a href="https://www.youtube.com/watch?v=c7SuSIiWNYw/?img_index=1" class="project-link">See Detail &rarr;</a>
+                <p>Lighting and Render Artist for Children's Animation series.</p>
+                <a href="https://www.youtube.com/watch?v=c7SuSIiWNYw" class="project-link" target="_blank">Watch Project <i class="fas fa-arrow-right"></i></a>
             </div>
             
-            <div class="project-card">
+            <div class="project-card" data-aos="fade-up" data-aos-delay="200">
                 <img src="img/4.jpg" alt="Cleo and Cuquin">
                 <h3>Cleo and Cuquin</h3>
-                <p>Children television Animation series.</p>
-                <a href="https://www.youtube.com/watch?v=_3TuQvsTzJg/?img_index=1" class="project-link" target="_blank">See Detail &rarr;</a>
+                <p>Lighting and Render Artist for Children's animation series.</p>
+                <a href="https://www.youtube.com/watch?v=_3TuQvsTzJg" class="project-link" target="_blank">Watch Project <i class="fas fa-arrow-right"></i></a>
             </div>
 
-            <div class="project-card">
+            <div class="project-card" data-aos="fade-up" data-aos-delay="300">
                 <img src="img/5.jpg" alt="AlienCG Trailer">
                 <h3>AlienCG Trailer</h3>
                 <p></p>
-                <a href="https://youtu.be/BQJhHZa31F0?si=hmLU-2nfuK89-bcO/?img_index=1" class="project-link" target="_blank">See Detail &rarr;</a>
+                <a href="https://youtu.be/BQJhHZa31F0" class="project-link" target="_blank">Watch Project <i class="fas fa-arrow-right"></i></a>
             </div>
 
-            <div class="project-card">
+            <div class="project-card" data-aos="fade-up" data-aos-delay="400">
                 <img src="img/8.png" alt="KMIPN VI">
                 <h3>KMIPN VI Animation Competition 2024</h3>
                 <p>2nd Place Winner “Animation” at National Polytechnic Informatics Student Competition (KMIPN VI) 2024.</p>
-                <a href="https://youtu.be/ta23iUDek4E?si=DkseGpQzJwUa-cF4/?img_index=1" class="project-link" target="_blank">See Detail &rarr;</a>
+                <a href="https://youtu.be/ta23iUDek4E" class="project-link" target="_blank">Watch Project <i class="fas fa-arrow-right"></i></a>
             </div>
 
-            <div class="project-card">
+            <div class="project-card" data-aos="fade-up" data-aos-delay="100">
                 <img src="img/6.jpg" alt="MMB Fest Mascot">
-                <h3>Mascot for MMB Fest</h3>
+                <h3>MMB Fest Mascot</h3>
                 <p>3D Mascot making for MMB Fest exhibition event. (@mmbfest) on Instagram.</p>
-                <a href="https://www.instagram.com/mmbfest" class="project-link" target="_blank">See Detail &rarr;</a>
+                <a href="https://www.instagram.com/mmbfest" class="project-link" target="_blank">View Details <i class="fas fa-arrow-right"></i></a>
             </div>
 
-            <div class="project-card">
+            <div class="project-card" data-aos="fade-up" data-aos-delay="200">
                 <img src="img/7.png" alt="Theatricals Bumper">
-                <h3>3D Theatricals Music (Bumper)</h3>
+                <h3>Theatricals Music Bumper</h3>
                 <p>3D Bumper making for Theatricals Music Performance. (@wonderlands.wonder) on Instagram.</p>
-                <a href="https://www.youtube.com/live/cnKrnNk4YR4?si=Aai8DixyAPfAEzFt" class="project-link" target="_blank">See Detail &rarr;</a>
+                <a href="https://www.youtube.com/live/cnKrnNk4YR4" class="project-link" target="_blank">View Details <i class="fas fa-arrow-right"></i></a>
+            </div>
+             
+             <div class="project-card" data-aos="fade-up" data-aos-delay="300">
+                <img src="img/9.png" alt="Pokémon GO Bumper">
+                <h3>Pokémon GO PGTraveler</h3>
+                <p>Creating a 3D bumper - Working as a team, I contributed by handling the 3D Asset Environment.</p>
+                <a href="https://www.youtube.com/watch?v=XLxKvS1e-nU" class="project-link" target="_blank">View Details <i class="fas fa-arrow-right"></i></a>
             </div>
 
-            <div class="project-card">
-                <img src="img/9.png" alt="Pokémon GO Bumper">
-                <h3>Pokémon GO PGTraveler (Bumper)</h3>
-                <p>Creating a 3D bumper - Working as a team, I contributed by handling the 3D Asset Environment.</p>
-                <a href="https://www.youtube.com/watch?v=XLxKvS1e-nU" class="project-link" target="_blank">See Detail &rarr;</a>
-            </div>
         </div>
     </section>
 
     <section id="personal">
-        <h2 class="section-title">Personal Projects</h2>
+        <h2 class="section-title" data-aos="fade-up">Personal Projects</h2>
         <div class="projects-grid">
             
-            <div class="project-card">
-                <img src="img/p1_1.png" alt="Numa House Model">
-                <h3>Numa House Model</h3>
+            <div class="project-card" data-aos="flip-left" data-aos-delay="100">
+                <img src="img/p1_1.png" alt="Numa House">
+                <h3>Numa House</h3>
                 <p>3D stylized numa house model using Blender.</p>
-                <a href="img/p1_1.png" target="_blank" class="project-link" target="_blank">See Image &rarr;</a>
+                <a href="img/p1_1.png" target="_blank" class="project-link">View Image <i class="fas fa-expand"></i></a>
             </div>
 
-            <div class="project-card">
-                <img src="img/p2.png" alt="Stylized House Model">
+            <div class="project-card" data-aos="flip-left" data-aos-delay="200">
+                <img src="img/p2.png" alt="Stylized House">
                 <h3>Stylized House Model</h3>
                 <p>3D stylized house model using Blender.</p>
-                <a href="img/p2.png" target="_blank" class="project-link" target="_blank">See Image &rarr;</a>
+                <a href="img/p2.png" target="_blank" class="project-link">View Image <i class="fas fa-expand"></i></a>
             </div>
 
-            <div class="project-card">
-                <img src="img/p3.png" alt="Stylized House Model">
+            <div class="project-card" data-aos="flip-left" data-aos-delay="300">
+                <img src="img/p3.png" alt="High Poly Ship">
                 <h3>High Poly Ship</h3>
-                <p>3D high poly ship model using Blender.</p>
-                <a href="img/p3.png" target="_blank" class="project-link" target="_blank">See Image &rarr;</a>
+                <p>3D high poly ship model.</p>
+                <a href="img/p3.png" target="_blank" class="project-link">View Image <i class="fas fa-expand"></i></a>
+            </div>
+             <div class="project-card" data-aos="flip-left" data-aos-delay="400">
+                <img src="img/p4.png" alt="High Poly Kitchen">
+                <h3>Modern Kitchen</h3>
+                <p>3D Interior high poly kitchen model using Blender.</p>
+                <a href="img/p4.png" target="_blank" class="project-link">View Image <i class="fas fa-expand"></i></a>
             </div>
 
-            <div class="project-card">
-                <img src="img/p4.png" alt="Stylized House Model">
-                <h3>High Poly Kitchen</h3>
-                <p>3D high poly kitchen model using Blender.</p>
-                <a href="img/p4.png" target="_blank" class="project-link" target="_blank">See Image &rarr;</a>
-            </div>
-            
-            </div>
+        </div>
     </section>
 
     <section id="contact" class="contact">
-        <h2 class="section-title">Contact</h2>
-        <p>Interact with me on Social Media!</p>
-        
-        <div class="social-links">
-            <a href="https://www.instagram.com/goldannm/" target="_blank"><i class="fab fa-instagram"></i></a>
-            <a href="https://x.com/goldannn_05" target="_blank"><i class="fa-brands fa-x-twitter"></i></a>
-            <a href="https://www.linkedin.com/in/goldan-mahardhika-090702263/" target="_blank"><i class="fab fa-linkedin-in"></i></a>
-            <a href="mailto:goldanmahardhika@gmail.com"><i class="fas fa-envelope"></i></a>
+        <div data-aos="zoom-in" data-aos-offset="0">
+            <h2 class="section-title">Contact</h2>
+            <p style="color: #ccc; margin-bottom: 20px;">Interact with me on Social Media!</p>
+            
+            <div class="social-links">
+                <a href="https://www.instagram.com/goldannm/" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="https://x.com/goldannn_05" target="_blank" aria-label="Twitter X"><i class="fa-brands fa-x-twitter"></i></a>
+                <a href="https://www.linkedin.com/in/goldan-mahardhika-090702263/" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                <a href="mailto:goldanmahardhika@gmail.com" aria-label="Email"><i class="fas fa-envelope"></i></a>
+            </div>
         </div>
     </section>
 
     <footer>
-        <p>&copy; 2024 Goldan Mahardhika</p>
+        <p>&copy; 2025 Goldan Mahardhika</p>
     </footer>
 
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+
+        AOS.init({ once: true, offset: 0, duration: 800, easing: 'ease-in-out' });
+
+        // --- TYPEWRITER SCRIPT ---
+        const textElement = document.getElementById('typing-text');
+        const phrases = ["3D Artist", "Interested in Crypto & Web 3"];
+        let phraseIndex = 0; let charIndex = 0; let isDeleting = false;
+
+        function type() {
+            const currentPhrase = phrases[phraseIndex];
+            if (isDeleting) {
+                textElement.textContent = currentPhrase.substring(0, charIndex - 1); charIndex--;
+            } else {
+                textElement.textContent = currentPhrase.substring(0, charIndex + 1); charIndex++;
+            }
+            let typeSpeed = isDeleting ? 40 : 50;
+            if (!isDeleting && charIndex === currentPhrase.length) {
+                typeSpeed = 2000; isDeleting = true;
+            } else if (isDeleting && charIndex === 0) {
+                isDeleting = false; phraseIndex = (phraseIndex + 1) % phrases.length; typeSpeed = 500;
+            }
+            setTimeout(type, typeSpeed);
+        }
+        document.addEventListener('DOMContentLoaded', type);
+
+        // --- PARTICLE NETWORK SYSTEM (CANVAS) ---
+        const canvas = document.getElementById('particle-canvas');
+        const ctx = canvas.getContext('2d');
+        
+        let width, height;
+        let particles = [];
+        
+        // Partikel
+        const config = {
+            particleColor: 'rgba(79, 172, 254, 0.4)',
+            lineColor: 'rgba(79, 172, 254, 0.15)',   
+            particleAmount: 30,
+            defaultSpeed: 0.01,
+            variantSpeed: 1,
+            defaultRadius: 2,
+            variantRadius: 2,
+            linkRadius: 150, 
+        };
+
+        // Resize Canvas
+        function resize() {
+            width = window.innerWidth;
+            height = window.innerHeight;
+            canvas.width = width;
+            canvas.height = height;
+        }
+
+        // Kelas Partikel
+        class Particle {
+            constructor() {
+                this.x = Math.random() * width;
+                this.y = Math.random() * height;
+                this.speed = config.defaultSpeed + Math.random() * config.variantSpeed;
+                this.directionAngle = Math.floor(Math.random() * 360);
+                this.color = config.particleColor;
+                this.radius = config.defaultRadius + Math.random() * config.variantRadius;
+                this.vector = {
+                    x: Math.cos(this.directionAngle) * this.speed,
+                    y: Math.sin(this.directionAngle) * this.speed
+                };
+            }
+
+            update() {
+                // Pergerakan
+                this.x += this.vector.x;
+                this.y += this.vector.y;
+
+                // (Bounce)
+                if (this.x >= width || this.x <= 0) this.vector.x *= -1;
+                if (this.y >= height || this.y <= 0) this.vector.y *= -1;
+            }
+
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                ctx.fillStyle = this.color;
+                ctx.fill();
+            }
+        }
+
+        function initParticles() {
+            particles = [];
+            // Sesuaikan jumlah partikel dengan ukuran layar
+            let amount = window.innerWidth < 768 ? 50 : config.particleAmount;
+            
+            for (let i = 0; i < amount; i++) {
+                particles.push(new Particle());
+            }
+        }
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, width, height);
+
+            for (let i = 0; i < particles.length; i++) {
+                particles[i].update();
+                particles[i].draw();
+
+                for (let j = i; j < particles.length; j++) {
+                    let distance = Math.sqrt(
+                        Math.pow((particles[i].x - particles[j].x), 2) + 
+                        Math.pow((particles[i].y - particles[j].y), 2)
+                    );
+
+                    if (distance < config.linkRadius) {
+                        ctx.beginPath();
+                        ctx.strokeStyle = config.lineColor;
+                        ctx.lineWidth = 1;
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        ctx.stroke();
+                        ctx.closePath();
+                    }
+                }
+            }
+            requestAnimationFrame(animateParticles);
+        }
+
+        // Event Listeners
+        window.addEventListener('resize', () => {
+            resize();
+            initParticles();
+        });
+
+        // Start
+        resize();
+        initParticles();
+        animateParticles();
+    </script>
 </body>
 </html>
