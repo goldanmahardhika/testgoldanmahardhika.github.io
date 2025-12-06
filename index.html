@@ -46,8 +46,8 @@
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: -10; /* Di belakang konten */
-            background: #020202; /* Background dasar hitam */
+            z-index: -10;
+            background: #020202;
         }
 
         a { text-decoration: none; color: inherit; transition: 0.3s; }
@@ -98,7 +98,7 @@
         .profile-img {
             width: 200px; height: 200px; border-radius: 50%; object-fit: cover;
             border: 2px solid rgba(255, 255, 255, 0.2); 
-            box-shadow: 0 0 60px rgba(79, 172, 254, 0.5); /* Glow biru */
+            box-shadow: 0 0 60px rgba(79, 172, 254, 0.5);
         }
 
         .hero h1 {
@@ -156,7 +156,7 @@
         .about-content, .project-card {
             background: var(--glass-bg); border: 1px solid var(--glass-border);
             border-radius: 20px; 
-            backdrop-filter: blur(15px); /* Blur lebih kuat */
+            backdrop-filter: blur(15px);
             -webkit-backdrop-filter: blur(15px);
             box-shadow: 0 10px 30px rgba(0,0,0,0.2);
         }
@@ -433,11 +433,9 @@
             }
 
             update() {
-                // Pergerakan
                 this.x += this.vector.x;
                 this.y += this.vector.y;
 
-                // (Bounce)
                 if (this.x >= width || this.x <= 0) this.vector.x *= -1;
                 if (this.y >= height || this.y <= 0) this.vector.y *= -1;
             }
@@ -452,7 +450,6 @@
 
         function initParticles() {
             particles = [];
-            // Sesuaikan jumlah partikel dengan ukuran layar
             let amount = window.innerWidth < 768 ? 50 : config.particleAmount;
             
             for (let i = 0; i < amount; i++) {
